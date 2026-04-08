@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Ilyesse Kheder | BTS SIO SISR</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #030508;
+            --surface-color: rgba(10, 15, 25, 0.85);
+            --text-color: #f0f0f0;
+            --text-muted: #8b9bb4;
+            --accent-main: #00d2ff;
+            --accent-sec: #0055ff;
+            --neon-glow: 0 0 15px rgba(0, 210, 255, 0.4), 0 0 30px rgba(0, 85, 255, 0.2);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        html { scroll-behavior: smooth; }
+        body { background-color: var(--bg-color); color: var(--text-color); overflow-x: hidden; line-height: 1.6; }
+
+        /* --- FOND ANIMÉ INFORMATIQUE : DATA DUST --- */
+        #networkCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -2;
+            background: radial-gradient(circle at center, #050811 0%, #010204 100%);
+        }
+
+        /* --- NAVBAR --- */
+        nav {
+            position: fixed; top: 0; width: 100%; padding: 1.5rem 5%;
+            background: rgba(3, 5, 8, 0.85); backdrop-filter: blur(10px);
+            display: flex; justify-content: space-between; align-items: center;
+            z-index: 1000; border-bottom: 1px solid rgba(0, 210, 255, 0.1);
+        }
+        .logo { font-weight: 800; font-size: 1.5rem; text-transform: uppercase; letter-spacing: 2px; }
+        .logo span { color: var(--accent-main); }
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
+        .nav-links a {
+            color: var(--text-color); text-decoration: none; font-weight: 600;
+            font-size: 0.9rem; text-transform: uppercase; position: relative;
+        }
+        .nav-links a::after {
+            content: ''; position: absolute; width: 0; height: 2px;
+            bottom: -5px; left: 0; background-color: var(--accent-main); transition: 0.3s ease;
+        }
+        .nav-links a:hover::after { width: 100%; }
+
+        /* --- SECTIONS --- */
+        section { padding: 8rem 10% 4rem; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; position: relative; z-index: 1; }
+        .section-title { font-size: 3rem; margin-bottom: 3rem; font-weight: 800; text-transform: uppercase; text-align: center; }
+        .section-title span { background: -webkit-linear-gradient(var(--accent-main), var(--accent-sec)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        /* --- BOUTONS --- */
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+            padding: 1rem 2.5rem; border-radius: 30px; text-decoration: none;
+            font-weight: 600; text-transform: uppercase; transition: all 0.3s ease; margin: 0.5rem; cursor: pointer; border: none; font-size: 1rem;
+        }
+        .btn-primary { background: linear-gradient(45deg, var(--accent-sec), var(--accent-main)); color: #fff; box-shadow: var(--neon-glow); }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 0 25px rgba(0, 210, 255, 0.6); }
+        .btn-secondary { border: 2px solid var(--accent-main); color: var(--accent-main); background: transparent; }
+        .btn-secondary:hover { background: rgba(0, 210, 255, 0.1); transform: translateY(-3px); }
+        
+        .btn-pdf {
+            display: inline-flex; align-items: center; gap: 8px; margin-top: 1rem; padding: 0.6rem 1.2rem;
+            border-radius: 8px; background: rgba(0, 210, 255, 0.05); color: var(--accent-main);
+            text-decoration: none; font-size: 0.9rem; font-weight: 600; cursor: pointer;
+            border: 1px solid rgba(0, 210, 255, 0.3); transition: 0.3s ease; width: fit-content;
+        }
+        .btn-pdf:hover { background: rgba(0, 210, 255, 0.15); border-color: var(--accent-main); transform: translateX(5px); }
+
+        /* --- ACCUEIL --- */
+        #accueil { text-align: center; align-items: center; padding-top: 0; }
+        h1 { font-size: 4.5rem; font-weight: 800; margin-bottom: 1rem; line-height: 1.1; }
+        h1 .highlight { background: -webkit-linear-gradient(var(--accent-main), var(--accent-sec)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero-subtitle { font-size: 1.5rem; color: var(--text-muted); margin-bottom: 2rem; max-width: 600px; }
+
+        /* --- CARTES GRID --- */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2.5rem; width: 100%; }
+        .card {
+            background: var(--surface-color); backdrop-filter: blur(5px);
+            padding: 2.5rem; border-radius: 15px; border: 1px solid rgba(0, 210, 255, 0.1);
+            transition: all 0.4s ease; position: relative; overflow: hidden; display: flex; flex-direction: column;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .card::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px;
+            background: linear-gradient(90deg, var(--accent-sec), var(--accent-main));
+            transform: scaleX(0); transform-origin: left; transition: transform 0.4s ease;
+        }
+        .card:hover { transform: translateY(-10px); border-color: rgba(0, 210, 255, 0.4); box-shadow: 0 15px 40px rgba(0,0,0,0.8), var(--neon-glow); }
+        .card:hover::before { transform: scaleX(1); }
+        
+        .card-img { width: 100%; height: 160px; object-fit: contain; border-radius: 8px; margin-bottom: 1rem; border: 1px solid rgba(255,255,255,0.05); background: #ffffff; padding: 10px; }
+        .card-date { font-size: 0.85rem; color: var(--accent-main); margin-bottom: 1rem; font-weight: 600; text-transform: uppercase; }
+        .card h3 { font-size: 1.5rem; margin-bottom: 1rem; color: #fff; }
+        .card p { color: var(--text-muted); margin-bottom: 1.5rem; flex-grow: 1; }
+        .tech-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: auto; margin-bottom: 1rem; }
+        .tech-tag { background: rgba(0, 210, 255, 0.05); color: #fff; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.8rem; border: 1px solid rgba(0, 210, 255, 0.2); }
+
+        /* --- TABLEAU VEILLE --- */
+        .table-container { overflow-x: auto; width: 100%; }
+        .veille-table { width: 100%; border-collapse: collapse; text-align: left; }
+        .veille-table th { padding: 1rem; border-bottom: 2px solid var(--accent-main); color: var(--accent-main); font-weight: 600; font-size: 1.1rem; }
+        .veille-table td { padding: 1.2rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.05); color: var(--text-muted); vertical-align: top; }
+        .veille-table tbody tr { transition: background 0.3s ease; }
+        .veille-table tbody tr:hover { background: rgba(0, 210, 255, 0.05); }
+        .veille-table td.highlight-col { color: #fff; font-weight: 600; }
+        .veille-link { color: var(--accent-main); text-decoration: none; font-weight: 600; transition: color 0.3s; display: inline-block; margin-top: 5px; }
+        .veille-link:hover { color: #fff; text-shadow: var(--neon-glow); }
+
+        /* --- TIMELINE VEILLE INFORMATIQUE --- */
+        .timeline {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 0;
+        }
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background: linear-gradient(to bottom, var(--accent-main), var(--accent-sec));
+            top: 0; bottom: 0; left: 50%;
+            margin-left: -2px;
+            border-radius: 2px;
+            box-shadow: var(--neon-glow);
+        }
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            background-color: inherit;
+            width: 50%;
+        }
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px; height: 20px;
+            right: -10px; top: 32px;
+            background-color: var(--bg-color);
+            border: 4px solid var(--accent-main);
+            border-radius: 50%;
+            z-index: 1;
+            box-shadow: var(--neon-glow);
+        }
+        .left { left: 0; }
+        .right { left: 50%; }
+        .right::after { left: -10px; }
+        .timeline-content {
+            padding: 2rem;
+            background: var(--surface-color);
+            border-radius: 15px;
+            border: 1px solid rgba(0, 210, 255, 0.2);
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .timeline-content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 210, 255, 0.2);
+            border-color: var(--accent-main);
+        }
+        .timeline-content h3 {
+            color: #fff;
+            margin-bottom: 10px;
+        }
+        .timeline-content .card-date {
+            color: var(--accent-main);
+        }
+        .left .timeline-content::before {
+            content: " ";
+            height: 0; position: absolute; top: 28px; width: 0; z-index: 1; right: -15px;
+            border: medium solid transparent;
+            border-width: 15px 0 15px 15px;
+            border-color: transparent transparent transparent rgba(0, 210, 255, 0.2);
+        }
+        .right .timeline-content::before {
+            content: " ";
+            height: 0; position: absolute; top: 28px; width: 0; z-index: 1; left: -15px;
+            border: medium solid transparent;
+            border-width: 15px 15px 15px 0;
+            border-color: transparent rgba(0, 210, 255, 0.2) transparent transparent;
+        }
+
+        @media screen and (max-width: 768px) {
+            .timeline::after { left: 31px; }
+            .timeline-item { width: 100%; padding-left: 70px; padding-right: 0px; }
+            .left::after, .right::after { left: 21px; }
+            .right { left: 0%; }
+            .left .timeline-content::before, .right .timeline-content::before {
+                left: -15px;
+                border-width: 15px 15px 15px 0;
+                border-color: transparent rgba(0, 210, 255, 0.2) transparent transparent;
+            }
+        }
+
+        /* --- MODALES --- */
+        .modal {
+            display: none; position: fixed; z-index: 2000; left: 0; top: 0;
+            width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.9);
+            backdrop-filter: blur(10px); opacity: 0; transition: opacity 0.3s ease;
+        }
+        .modal.show-modal { display: block; opacity: 1; }
+        .modal-content {
+            background-color: var(--surface-color); margin: 5% auto; padding: 3rem;
+            border: 1px solid var(--accent-main); border-radius: 15px; width: 80%; max-width: 900px;
+            box-shadow: var(--neon-glow); position: relative; transform: translateY(-50px); transition: transform 0.3s ease;
+        }
+        .modal.show-modal .modal-content { transform: translateY(0); }
+        .close-btn { color: var(--text-muted); float: right; font-size: 28px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .close-btn:hover { color: var(--accent-main); }
+        
+        .modal-img { width: 100%; max-height: 350px; object-fit: contain; border-radius: 8px; margin: 1.5rem 0; background: #ffffff; border: 1px solid rgba(0, 210, 255, 0.2); padding: 10px; }
+        .modal-content h2 { color: var(--accent-main); margin-bottom: 1.5rem; font-size: 2rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 1rem; }
+        .modal-content p { color: var(--text-color); margin-bottom: 1rem; font-size: 1.1rem; line-height: 1.8; }
+        .modal-content ul { margin-left: 2rem; margin-bottom: 1.5rem; color: var(--text-muted); line-height: 1.6; }
+        .modal-content li { margin-bottom: 0.8rem; }
+        .modal-content h3 { color: var(--accent-main); font-size: 1.3rem; margin-top: 1.5rem; margin-bottom: 1rem; }
+
+        /* --- ANIMATIONS SCROLL --- */
+        .hidden { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); }
+        .show { opacity: 1; transform: translateY(0); }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            h1 { font-size: 3rem; }
+            section { padding: 6rem 5% 3rem; }
+            .modal-content { width: 95%; padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="networkCanvas"></canvas>
+
+    <nav>
+        <div class="logo">IK<span>.</span></div>
+        <ul class="nav-links">
+            <li><a href="#accueil">Accueil</a></li>
+            <li><a href="#profil">À Propos</a></li>
+            <li><a href="#projets">Mes Projets</a></li>
+            <li><a href="#rapports">Mes Stages</a></li>
+            <li><a href="#veille">Veille</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <section id="accueil">
+        <h1 class="hidden">Ilyesse <br><span class="highlight">Kheder</span></h1>
+        <p class="hero-subtitle hidden" style="transition-delay: 200ms;">Étudiant en BTS SIO option SISR, passionné par les infrastructures réseaux et la cybersécurité.</p>
+        <div class="hidden" style="transition-delay: 400ms;">
+            <a href="#projets" class="btn btn-primary">Voir mes projets</a>
+            <a href="cv.pdf" target="_blank" class="btn btn-secondary">📄 Télécharger mon CV</a>
+        </div>
+    </section>
+
+    <section id="profil">
+        <h2 class="section-title hidden">Mon <span>Profil</span></h2>
+        <div class="grid">
+            <div class="card hidden">
+                <h3>Qui suis-je ?</h3>
+                <p>J'ai 20 ans et je poursuis actuellement un BTS SIO au lycée Marie Curie. J'ai choisi la spécialisation SISR pour comprendre comment concevoir et maintenir des réseaux robustes, sécurisés et performants.</p>
+                <div class="tech-tags mt-3">
+                    <span class="tech-tag">Autonomie</span>
+                    <span class="tech-tag">Esprit d'équipe</span>
+                    <span class="tech-tag">Apprentissage rapide</span>
+                </div>
+            </div>
+            <div class="card hidden" style="transition-delay: 200ms;">
+                <h3>Mon Parcours</h3>
+                <p><strong>2023 - 2025 (En cours)</strong><br>BTS SIO option SISR - Lycée Marie Curie</p>
+                <p><strong>2023 - 2024</strong><br>Baccalauréat Professionnel RISC - Lycée Ampère</p>
+                <a href="cv.pdf" target="_blank" class="btn-pdf">👁️ Consulter mon CV (PDF)</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="projets">
+        <h2 class="section-title hidden">Mes <span>Projets</span></h2>
+        <div class="grid">
+            
+            <div class="card hidden">
+                <img src="SCHEMA.png" alt="Schéma Infrastructure E5" class="card-img" onerror="this.style.display='none'">
+                
+                <div class="card-date">Projet d'Examen</div>
+                <h3>Épreuve E5 - Infra Réseau</h3>
+                <p>Conception d'une architecture réseau sécurisée avec segmentation VLSM et inventaire des services (AD, Zabbix, GLPI, FOG).</p>
+                <div class="tech-tags">
+                    <span class="tech-tag">Plan d'adressage</span>
+                    <span class="tech-tag">VLSM</span>
+                    <span class="tech-tag">Active Directory</span>
+                    <span class="tech-tag">Zabbix / GLPI</span>
+                </div>
+                <button onclick="openModal('modal7')" class="btn-pdf" style="margin-top:auto;">➕ Détails du projet</button>
+            </div>
+
+            <div class="card hidden" style="transition-delay: 100ms;">
+                <img src="image_0d45a5.png" alt="Schéma Configuration Routeurs" class="card-img" onerror="this.style.display='none'">
+                
+                <div class="card-date">Projet Pratique</div>
+                <h3>Routage Statique</h3>
+                <p>Configuration de deux routeurs avec chacun deux PC connectés pour permettre la communication entre les réseaux.</p>
+                <div class="tech-tags">
+                    <span class="tech-tag">Cisco CLI</span>
+                    <span class="tech-tag">Routage Statique</span>
+                    <span class="tech-tag">Ping (ICMP)</span>
+                </div>
+                <a href="routeur.pdf" target="_blank" class="btn-pdf" style="margin-bottom: 0.5rem;">📄 Compte rendu (PDF)</a>
+                <button onclick="openModal('modal1')" class="btn-pdf">➕ Résumé du projet</button>
+            </div>
+
+            <div class="card hidden" style="transition-delay: 200ms;">
+                <img src="image_0d454b.png" alt="Schéma Configuration Commutateurs" class="card-img" onerror="this.style.display='none'">
+                
+                <div class="card-date">Projet Pratique</div>
+                <h3>Commutation & SSH</h3>
+                <p>Configuration réseau simple dans un réseau local (LAN), incluant des ordinateurs et des commutateurs (switches) interconnectés.</p>
+                <div class="tech-tags">
+                    <span class="tech-tag">Switch</span>
+                    <span class="tech-tag">VLAN 1</span>
+                    <span class="tech-tag">SSH / RSA</span>
+                </div>
+                <a href="switch.pdf" target="_blank" class="btn-pdf" style="margin-bottom: 0.5rem;">📄 Compte rendu (PDF)</a>
+                <button onclick="openModal('modal2')" class="btn-pdf">➕ Résumé du projet</button>
+            </div>
+
+            <div class="card hidden" style="transition-delay: 300ms;">
+                <img src="t.jpg" alt="Interface WatchGuard SD-WAN" class="card-img" onerror="this.style.display='none'">
+                
+                <div class="card-date">Stage de 2ème année - Sécurité</div>
+                <h3>Migration FAI & VoIP</h3>
+                <p>Gestion de la migration vers un nouveau lien fibre et résolution des conflits de routage sur firewall WatchGuard impactant la téléphonie VoIP.</p>
+                <div class="tech-tags">
+                    <span class="tech-tag">WatchGuard</span>
+                    <span class="tech-tag">SD-WAN</span>
+                    <span class="tech-tag">VoIP Yealink</span>
+                </div>
+                <a href="r2.pdf" target="_blank" class="btn-pdf" style="margin-bottom: 0.5rem;">📄 Rapport de Stage (R2)</a>
+                <button onclick="openModal('modal5')" class="btn-pdf">➕ Détails du projet</button>
+            </div>
+
+            <div class="card hidden" style="transition-delay: 400ms;">
+                <img src="f.png" alt="Interface Déploiement FOG" class="card-img" onerror="this.style.display='none'">
+                
+                <div class="card-date">Stage de 2ème année - Système</div>
+                <h3>Industrialisation (FOG)</h3>
+                <p>Automatisation du déploiement des postes de travail via le protocole PXE (Serveur FOG) et intégration de l'agent GLPI.</p>
+                <div class="tech-tags">
+                    <span class="tech-tag">Serveur FOG / PXE</span>
+                    <span class="tech-tag">GLPI</span>
+                    <span class="tech-tag">Automatisation</span>
+                </div>
+                <a href="r2.pdf" target="_blank" class="btn-pdf" style="margin-bottom: 0.5rem;">📄 Rapport de Stage (R2)</a>
+                <button onclick="openModal('modal6')" class="btn-pdf">➕ Détails du projet</button>
+            </div>
+
+            <div class="card hidden" style="transition-delay: 500ms;">
+                <img src="image_0d500f.jpg" alt="Plan Wi-Fi Roaming" class="card-img" onerror="this.style.display='none'">
+
+                <div class="card-date">Stage de 1ère année - Sans-Fil</div>
+                <h3>Déploiement Wi-Fi Roaming</h3>
+                <p>Installation de bornes Wi-Fi optimisées en roaming pour garantir une connexion ininterrompue lors des déplacements sur le site de La Friche.</p>
+                <div class="tech-tags">
+                    <span class="tech-tag">Wi-Fi Roaming</span>
+                    <span class="tech-tag">802.11r/k/v</span>
+                </div>
+                <a href="r1.pdf" target="_blank" class="btn-pdf" style="margin-bottom: 0.5rem;">📄 Rapport de Stage (R1)</a>
+                <button onclick="openModal('modal3')" class="btn-pdf">➕ Détails du projet</button>
+            </div>
+
+            <div class="card hidden" style="transition-delay: 600ms;">
+                <img src="image_0d50ac.png" alt="Transmission Audio Fibre" class="card-img" onerror="this.style.display='none'">
+
+                <div class="card-date">Stage de 1ère année - Haute Dispo</div>
+                <h3>Transmission Audio & Redondance</h3>
+                <p>Configuration de switchs de niveau 3 en STP reliés par double fibre optique pour assurer un failover automatique d'un flux audio UDP.</p>
+                <div class="tech-tags">
+                    <span class="tech-tag">Fibre Optique</span>
+                    <span class="tech-tag">STP</span>
+                    <span class="tech-tag">UDP / VLC</span>
+                </div>
+                <a href="r1.pdf" target="_blank" class="btn-pdf" style="margin-bottom: 0.5rem;">📄 Rapport de Stage (R1)</a>
+                <button onclick="openModal('modal4')" class="btn-pdf">➕ Détails du projet</button>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="rapports">
+        <h2 class="section-title hidden">Mes <span>Stages</span></h2>
+        <div class="grid">
+            <div class="card hidden">
+                <div class="card-date">1ère Année de BTS SIO</div>
+                <h3>La Friche Belle de Mai</h3>
+                <p>Déploiement d'infrastructure réseau, mise en place de Wi-Fi Roaming et création d'une redondance fibre optique pour la transmission audio.</p>
+                <div class="tech-tags">
+                    <span class="tech-tag">Réseau</span>
+                    <span class="tech-tag">Wi-Fi</span>
+                    <span class="tech-tag">Switching</span>
+                </div>
+                <a href="r1.pdf" target="_blank" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">📄 Télécharger R1 (PDF)</a>
+            </div>
+            
+            <div class="card hidden" style="transition-delay: 200ms;">
+                <div class="card-date">2ème Année de BTS SIO</div>
+                <h3>Fédération Léo Lagrange</h3>
+                <p>Migration de FAI, résolution de conflits de routage SD-WAN sur firewall WatchGuard, et industrialisation des déploiements informatiques via FOG et GLPI.</p>
+                <div class="tech-tags">
+                    <span class="tech-tag">Cybersécurité</span>
+                    <span class="tech-tag">Système</span>
+                    <span class="tech-tag">PXE</span>
+                </div>
+                <a href="r2.pdf" target="_blank" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">📄 Télécharger R2 (PDF)</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="veille">
+        <h2 class="section-title hidden">Veille <span>Informatique</span></h2>
+        
+        <p class="hidden" style="text-align: center; color: var(--text-muted); margin-bottom: 2rem; font-size: 1.1rem; max-width: 800px; margin-left: auto; margin-right: auto;">
+            <strong>Thème :</strong> L'avènement et l'intégration du Wi-Fi 7 en entreprise.<br>
+            <span style="font-size: 0.95rem; opacity: 0.8;">Face à l'explosion du trafic et des usages Cloud/IA, le Wi-Fi 7 s'impose comme le nouveau standard. Cette veille se concentre sur les annonces matérielles et les stratégies d'infrastructure des leaders du marché.</span>
+        </p>
+
+        <div class="timeline">
+            <div class="timeline-item left hidden">
+                <div class="timeline-content">
+                    <div class="card-date">07 Avril 2026 • Cisco Blog</div>
+                    <h3>Fin du Wi-Fi 6</h3>
+                    <p style="line-height: 1.8;">Cisco officialise la transition vers le Wi-Fi 7 en annonçant la fin de commercialisation (EoL) de ses bornes Catalyst Wi-Fi 6. En tant que futur administrateur, cela prouve qu'il faut dès à présent concevoir les réseaux autour de cette nouvelle norme.</p>
+                    <a href="https://gblogs.cisco.com/fr/reseaux/actualites-cisco-networking-avril-2026/" target="_blank" class="btn-pdf">🔗 Lire l'article</a>
+                </div>
+            </div>
+            
+            <div class="timeline-item right hidden" style="transition-delay: 150ms;">
+                <div class="timeline-content">
+                    <div class="card-date">Mars 2026 • Allnet France</div>
+                    <h3>Salon UniFi Paris</h3>
+                    <p style="line-height: 1.8;">Déploiement massif des bornes U7 Pro sur le marché européen. L'exploitation de la bande des 6 GHz et de la technologie MLO permet aux PME d'atteindre des débits multi-gigabits avec une latence quasi nulle.</p>
+                    <a href="https://www.allnetfrance.fr/blog/actualites-1/les-dernieres-innovations-unifi-arrivent-en-europe-43" target="_blank" class="btn-pdf">🔗 Lire l'article</a>
+                </div>
+            </div>
+
+            <div class="timeline-item left hidden" style="transition-delay: 300ms;">
+                <div class="timeline-content">
+                    <div class="card-date">04 Février 2026 • IT Social</div>
+                    <h3>Bilan réseau 2026</h3>
+                    <p style="line-height: 1.8;">Une analyse de fond démontrant que le Wi-Fi 7 n'est plus une simple évolution de confort, mais une nécessité critique en 2026 pour désengorger les infrastructures réseau face à la gourmandise en bande passante des outils d'Intelligence Artificielle.</p>
+                    <a href="https://itsocial.fr/contenus/tribunes/2026-lannee-de-la-bascule-technologique-pour-le-reseau/" target="_blank" class="btn-pdf">🔗 Lire l'article</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <h2 class="section-title hidden">Me <span>Contacter</span></h2>
+        <div class="card hidden" style="text-align: center; max-width: 600px; margin: 0 auto; align-items: center;">
+            <p style="font-size: 1.2rem; margin-bottom: 2rem; color: #fff;">Je suis à la recherche de nouvelles opportunités pour mettre en pratique mes compétences en infrastructure et réseaux.</p>
+            <a href="mailto:khederilyesse1@gmail.com" class="btn btn-primary">✉️ M'envoyer un E-mail</a>
+            <div style="margin-top: 2rem; color: var(--text-muted);">
+                <p><strong>Téléphone :</strong> 06 95 73 45 86</p>
+                <p><strong>Email :</strong> khederilyesse1@gmail.com</p>
+            </div>
+        </div>
+    </section>
+
+    <div id="modal7" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('modal7')">&times;</span>
+            <h2>Épreuve E5 : Solutions d'infrastructure, systèmes et réseaux</h2>
+            <p>Dans le cadre de l'épreuve E5 du BTS SIO, j'ai conçu, documenté et mis en place une infrastructure réseau complète. Le but était de segmenter les différents services pour des raisons de sécurité, de performance et d'optimisation, en utilisant la méthode de découpage VLSM.</p>
+            
+            <h3>Plan d'adressage et Découpage (VLSM)</h3>
+            <ul>
+                <li><strong style="color:#ff6b6b;">Zone Commerciale (Rose) :</strong> Réseau 192.168.100.0/26 — Passerelle : 192.168.100.62</li>
+                <li><strong style="color:#c56bff;">Zone Marketing (Violet) :</strong> Réseau 192.168.100.64/26 — Passerelle : 192.168.100.126</li>
+                <li><strong style="color:#20c997;">Zone Wi-Fi Lycée (Vert foncé) :</strong> Réseau 192.168.20.0/24 — Passerelle : 192.168.20.254</li>
+                <li><strong style="color:#ffa94d;">Zone Application (Orange) :</strong> Réseau 10.10.10.0/24 — Passerelle : 10.10.10.254</li>
+            </ul>
+
+            <h3>Inventaire des Serveurs (Zone Infra & Admin)</h3>
+            <p>J'ai déployé des serveurs critiques répartis dans deux zones sécurisées distinctes :</p>
+            <ul>
+                <li><strong style="color:#b2f2bb;">Zone Serveurs d'Infrastructure (Vert clair - 172.16.50.0/24) :</strong>
+                    <ul style="margin-top: 5px;">
+                        <li><em>Zabbix (172.16.50.201)</em> : Monitoring et supervision réseau.</li>
+                        <li><em>GLPI (172.16.50.200)</em> : Gestion de parc informatique et helpdesk.</li>
+                        <li><em>Veeam (172.16.50.204)</em> : Sauvegarde centralisée de l'infrastructure.</li>
+                        <li><em>FOG (172.16.50.202)</em> : Déploiement automatisé d'images système (PXE).</li>
+                        <li><em>WSUS (172.16.50.203)</em> : Gestion des mises à jour Windows.</li>
+                    </ul>
+                </li>
+                <li><strong style="color:#74c0fc;">Zone Administration / AD (Bleu - 172.20.0.0/24) :</strong>
+                    <ul style="margin-top: 5px;">
+                        <li><em>ADDS 1 & 2 (172.20.0.253 / .252)</em> : Contrôleurs de domaine principal et de redondance.</li>
+                        <li><em>DNS Secondaire (172.20.0.3)</em> : Résolution de noms de domaine.</li>
+                        <li><em>Serveur TFTP (172.20.0.4)</em> : Sauvegarde des configurations des équipements (Switchs/Routeurs).</li>
+                    </ul>
+                </li>
+            </ul>
+            <img src="SCHEMA.png" alt="Schéma de l'infrastructure réseau E5" class="modal-img" onerror="this.style.display='none'">
+        </div>
+    </div>
+
+    <div id="modal1" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('modal1')">&times;</span>
+            <h2>Configuration Réseau et Routage Statique</h2>
+            <p>Ce projet consistait à configurer deux routeurs (R1 et R2) pour interconnecter différents réseaux locaux.</p>
+            <ul>
+                <li><strong>Configuration des interfaces :</strong> Attribution des adresses IP sur les interfaces série et FastEthernet (ex: l'interface serial 0/0/0 avec l'IP 192.168.3.1).</li>
+                <li><strong>Routage statique :</strong> Ajout des routes statiques sur chaque routeur pour atteindre les réseaux distants.</li>
+                <li><strong>Vérification :</strong> Validation de la configuration via un Ping ICMP entre le PC1 (192.168.10.1) et le PC3 (192.168.5.1).</li>
+            </ul>
+            <img src="image_0d45a5.png" alt="Topologie Routage Statique" class="modal-img" onerror="this.style.display='none'">
+        </div>
+    </div>
+
+    <div id="modal2" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('modal2')">&times;</span>
+            <h2>Configuration de Commutateurs et Accès SSH</h2>
+            <p>Mise en place d'une infrastructure réseau locale avec gestion des commutateurs et activation sécurisée.</p>
+            <ul>
+                <li><strong>Adressage IP :</strong> Tous les dispositifs sont intégrés au sous-réseau 192.168.1.0/24.</li>
+                <li><strong>Connexion initiale :</strong> Accès aux équipements Cisco via le port console avec le logiciel PuTTY.</li>
+                <li><strong>Accès Sécurisé :</strong> Configuration d'un nom de domaine et génération de clés cryptographiques RSA.</li>
+                <li><strong>Activation SSH :</strong> Mise en place de l'authentification locale pour sécuriser l'administration distante du switch sur les lignes VTY.</li>
+            </ul>
+            <img src="image_0d454b.png" alt="Topologie Switch et VLAN" class="modal-img" onerror="this.style.display='none'">
+        </div>
+    </div>
+
+    <div id="modal3" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('modal3')">&times;</span>
+            <h2>Déploiement Wi-Fi en Roaming</h2>
+            <p>Afin de répondre aux besoins de mobilité sur le site de La Friche, j'ai procédé à l'installation de bornes Wi-Fi configurées en roaming (Access Points).</p>
+            <ul>
+                <li><strong>Le principe du Roaming :</strong> Il permet à un appareil (téléphone, ordinateur) de passer automatiquement d'une borne à l'autre sans subir d'interruption.</li>
+                <li><strong>Protocoles :</strong> Ce fonctionnement fluide repose sur les normes IEEE 802.11r (Fast Transition), 802.11k et 802.11v.</li>
+            </ul>
+            <img src="image_0d500f.jpg" alt="Plan de la Friche" class="modal-img" onerror="this.style.display='none'">
+        </div>
+    </div>
+
+    <div id="modal4" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('modal4')">&times;</span>
+            <h2>Transmission Audio & Redondance Fibre</h2>
+            <p>J'ai mené des tests de haute disponibilité pour la transmission audio destinée à la radio du site.</p>
+            <ul>
+                <li><strong>Architecture de test :</strong> Deux PC connectés à des switchs de niveau 3 (SGS 6310-24P4X) reliés par deux fibres optiques distinctes.</li>
+                <li><strong>Test de résilience :</strong> En simulant une panne (débranchement de la fibre principale), le réseau a basculé instantanément sur le câble de secours (failover).</li>
+            </ul>
+            <div style="display: flex; flex-direction: column; gap: 1rem; align-items: center; margin-top: 1.5rem;">
+                <img src="image_0d50ac.png" alt="Switchs Planet reliés par fibre" class="modal-img" onerror="this.style.display='none'" style="margin: 0; max-height: 250px;">
+                <img src="image_0d508e.png" alt="Schéma de redondance" class="modal-img" onerror="this.style.display='none'" style="margin: 0; max-height: 200px; padding: 20px;">
+            </div>
+        </div>
+    </div>
+
+    <div id="modal5" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('modal5')">&times;</span>
+            <h2>Migration FAI & Téléphonie VoIP</h2>
+            <p>Lors de mon stage à la Fédération Léo Lagrange, j'ai géré les problématiques réseaux liées à une migration de Fournisseur d'Accès à Internet.</p>
+            <ul>
+                <li><strong>Problématique :</strong> Lors de la migration vers le nouveau lien fibre, les téléphones IP Yealink ont perdu leur enregistrement SIP.</li>
+                <li><strong>Diagnostic :</strong> J'ai identifié un conflit de routage au niveau du firewall WatchGuard, causé par des baux DHCP conservant les paramètres de l'ancien FAI.</li>
+                <li><strong>Résolution :</strong> Modification des routes statiques et des politiques SD-WAN directement sur le WatchGuard.</li>
+                <li><strong>Action terrain :</strong> Ré-étiquetage des ports switchs pour le bon VLAN et réalisation d'un Hard Reset sur chaque terminal pour vider le cache de provisioning.</li>
+            </ul>
+            <img src="t.jpg" alt="Interface WatchGuard" class="modal-img" onerror="this.style.display='none'">
+        </div>
+    </div>
+
+    <div id="modal6" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('modal6')">&times;</span>
+            <h2>Industrialisation des Déploiements Systèmes</h2>
+            <p>Pour optimiser le temps de gestion du parc informatique de Léo Lagrange (plusieurs centaines de postes), j'ai industrialisé la procédure de déploiement.</p>
+            <ul>
+                <li><strong>Déploiement d'images :</strong> Utilisation d'un serveur FOG pour déployer des images systèmes de manière centralisée via le protocole réseau PXE.</li>
+                <li><strong>Gestion de parc :</strong> Installation automatisée de l'agent GLPI en ligne de commande pour la remontée d'inventaire automatique.</li>
+                <li><strong>Automatisation des configurations :</strong> Déploiement de packages logiciels (RustDesk), intégration automatique au domaine, et configuration d'OpenVPN.</li>
+                <li><strong>Sécurité :</strong> Mise en place des accès sécurisés par authentification multifacteur (MFA) sur les postes.</li>
+            </ul>
+            <img src="f.png" alt="Interface Serveur FOG" class="modal-img" onerror="this.style.display='none'">
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById("networkCanvas");
+        const ctx = canvas.getContext("2d");
+
+        let width, height;
+        let particles = [];
+
+        function init() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            particles = [];
+            
+            // Densité encore plus élevée pour un véritable effet "poussière d'étoiles / data florissante"
+            const particleCount = Math.floor((width * height) / 1500); // Très dense
+
+            const colors = ['0, 210, 255', '0, 85, 255']; // Cyan et Bleu
+
+            for (let i = 0; i < particleCount; i++) {
+                // Création d'un effet de profondeur (parallax)
+                // Plus la taille est grande, plus le point semble proche et bouge un peu plus vite
+                let size = Math.random();
+                let radius = size * 2 + 0.5; // Taille entre 0.5 et 2.5
+                let speedMult = size * 0.5 + 0.1; // Les plus petits bougent plus lentement
+
+                particles.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    vx: (Math.random() - 0.5) * speedMult, 
+                    vy: (Math.random() - 0.5) * speedMult,
+                    radius: radius,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    alpha: Math.random() * 0.7 + 0.1 // Opacité très variée
+                });
+            }
+        }
+
+        window.addEventListener("resize", init);
+        init();
+
+        function draw() {
+            // Fond noir profond (efface complètement l'image précédente)
+            ctx.fillStyle = '#010205';
+            ctx.fillRect(0, 0, width, height);
+
+            for (let i = 0; i < particles.length; i++) {
+                let p = particles[i];
+
+                // Mise à jour de la position
+                p.x += p.vx;
+                p.y += p.vy;
+
+                // Rebond fluide sur les bords
+                if (p.x < 0 || p.x > width) p.vx *= -1;
+                if (p.y < 0 || p.y > height) p.vy *= -1;
+
+                // Dessiner la particule lumineuse
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                
+                // Petit effet de lueur
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = `rgba(${p.color}, ${p.alpha})`;
+                
+                ctx.fillStyle = `rgba(${p.color}, ${p.alpha})`;
+                ctx.fill();
+                
+                ctx.shadowBlur = 0; // Reset
+            }
+
+            requestAnimationFrame(draw);
+        }
+
+        draw();
+
+        // --- ANIMATIONS SCROLL & MODALES ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('show');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+
+        document.querySelectorAll('.hidden').forEach((el) => observer.observe(el));
+
+        function openModal(modalId) { document.getElementById(modalId).classList.add('show-modal'); }
+        function closeModal(modalId) { document.getElementById(modalId).classList.remove('show-modal'); }
+
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.classList.remove('show-modal');
+            }
+        }
+    </script>
+</body>
+</html>

@@ -285,8 +285,34 @@
         <div class="grid">
             
             <div class="card hidden">
+                <img src="image_0d500f.jpg" alt="Plan Wi-Fi Roaming" class="card-img" onerror="this.style.display='none'">
+                <div class="card-date">Stage de 1ère année - Sans-Fil</div>
+                <h3>Déploiement Wi-Fi Roaming</h3>
+                <p>Installation de bornes Wi-Fi optimisées en roaming pour garantir une connexion ininterrompue lors des déplacements sur le site de La Friche.</p>
+                <div class="tech-tags">
+                    <span class="tech-tag">Wi-Fi Roaming</span>
+                    <span class="tech-tag">802.11r/k/v</span>
+                </div>
+                <a href="r1.pdf" target="_blank" class="btn-pdf" style="margin-bottom: 0.5rem;">📄 Rapport de Stage (R1)</a>
+                <button onclick="openModal('modal3')" class="btn-pdf">➕ Détails du projet</button>
+            </div>
+
+            <div class="card hidden" style="transition-delay: 100ms;">
+                <img src="image_0d50ac.png" alt="Transmission Audio Fibre" class="card-img" onerror="this.style.display='none'">
+                <div class="card-date">Stage de 1ère année - Haute Dispo</div>
+                <h3>Transmission Audio & Redondance</h3>
+                <p>Configuration de switchs de niveau 3 en STP reliés par double fibre optique pour assurer un failover automatique d'un flux audio UDP.</p>
+                <div class="tech-tags">
+                    <span class="tech-tag">Fibre Optique</span>
+                    <span class="tech-tag">STP</span>
+                    <span class="tech-tag">UDP / VLC</span>
+                </div>
+                <a href="r1.pdf" target="_blank" class="btn-pdf" style="margin-bottom: 0.5rem;">📄 Rapport de Stage (R1)</a>
+                <button onclick="openModal('modal4')" class="btn-pdf">➕ Détails du projet</button>
+            </div>
+
+            <div class="card hidden" style="transition-delay: 200ms;">
                 <img src="t.png" alt="Interface WatchGuard SD-WAN" class="card-img" onerror="this.style.display='none'">
-                
                 <div class="card-date">Stage de 2ème année - Sécurité</div>
                 <h3>Migration FAI & VoIP</h3>
                 <p>Gestion de la migration vers un nouveau lien fibre et résolution des conflits de routage sur firewall WatchGuard impactant la téléphonie VoIP.</p>
@@ -299,9 +325,8 @@
                 <button onclick="openModal('modal5')" class="btn-pdf">➕ Détails du projet</button>
             </div>
 
-            <div class="card hidden" style="transition-delay: 100ms;">
+            <div class="card hidden" style="transition-delay: 300ms;">
                 <img src="f.png" alt="Interface Déploiement FOG" class="card-img" onerror="this.style.display='none'">
-                
                 <div class="card-date">Stage de 2ème année - Système</div>
                 <h3>Industrialisation (FOG)</h3>
                 <p>Automatisation du déploiement des postes de travail via le protocole PXE (Serveur FOG) et intégration de l'agent GLPI.</p>
@@ -314,38 +339,8 @@
                 <button onclick="openModal('modal6')" class="btn-pdf">➕ Détails du projet</button>
             </div>
 
-            <div class="card hidden" style="transition-delay: 200ms;">
-                <img src="image_0d500f.jpg" alt="Plan Wi-Fi Roaming" class="card-img" onerror="this.style.display='none'">
-
-                <div class="card-date">Stage de 1ère année - Sans-Fil</div>
-                <h3>Déploiement Wi-Fi Roaming</h3>
-                <p>Installation de bornes Wi-Fi optimisées en roaming pour garantir une connexion ininterrompue lors des déplacements sur le site de La Friche.</p>
-                <div class="tech-tags">
-                    <span class="tech-tag">Wi-Fi Roaming</span>
-                    <span class="tech-tag">802.11r/k/v</span>
-                </div>
-                <a href="borneWIFI.pdf" target="_blank" class="btn-pdf" style="margin-bottom: 0.5rem;">📄 Compte rendu (PDF)</a>
-                <button onclick="openModal('modal3')" class="btn-pdf">➕ Détails du projet</button>
-            </div>
-
-            <div class="card hidden" style="transition-delay: 300ms;">
-                <img src="image_0d50ac.png" alt="Transmission Audio Fibre" class="card-img" onerror="this.style.display='none'">
-
-                <div class="card-date">Stage de 1ère année - Haute Dispo</div>
-                <h3>Transmission Audio & Redondance</h3>
-                <p>Configuration de switchs de niveau 3 en STP reliés par double fibre optique pour assurer un failover automatique d'un flux audio UDP.</p>
-                <div class="tech-tags">
-                    <span class="tech-tag">Fibre Optique</span>
-                    <span class="tech-tag">STP</span>
-                    <span class="tech-tag">UDP / VLC</span>
-                </div>
-                <a href="emetteur.pdf" target="_blank" class="btn-pdf" style="margin-bottom: 0.5rem;">📄 Compte rendu (PDF)</a>
-                <button onclick="openModal('modal4')" class="btn-pdf">➕ Détails du projet</button>
-            </div>
-
             <div class="card hidden" style="transition-delay: 400ms;">
                 <img src="SCHEMA.png" alt="Schéma Infrastructure E5" class="card-img" onerror="this.style.display='none'">
-                
                 <div class="card-date">Projet d'Examen</div>
                 <h3>Épreuve E5 - Infra Réseau</h3>
                 <p>Conception d'une architecture réseau sécurisée avec segmentation VLSM et inventaire des services (AD, Zabbix, GLPI, FOG).</p>
@@ -360,7 +355,6 @@
 
             <div class="card hidden" style="transition-delay: 500ms;">
                 <img src="image_0d45a5.png" alt="Schéma Configuration Routeurs" class="card-img" onerror="this.style.display='none'">
-                
                 <div class="card-date">Projet Pratique</div>
                 <h3>Routage Statique</h3>
                 <p>Configuration de deux routeurs avec chacun deux PC connectés pour permettre la communication entre les réseaux.</p>
@@ -375,7 +369,6 @@
 
             <div class="card hidden" style="transition-delay: 600ms;">
                 <img src="image_0d454b.png" alt="Schéma Configuration Commutateurs" class="card-img" onerror="this.style.display='none'">
-                
                 <div class="card-date">Projet Pratique</div>
                 <h3>Commutation & SSH</h3>
                 <p>Configuration réseau simple dans un réseau local (LAN), incluant des ordinateurs et des commutateurs (switches) interconnectés.</p>
@@ -403,7 +396,7 @@
                     <span class="tech-tag">Wi-Fi</span>
                     <span class="tech-tag">Switching</span>
                 </div>
-                <a href="r1.pdf" target="_blank" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">📄 Télécharger R1 (PDF)</a>
+                <a href="r1.pdf" target="_blank" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">📄 Télécharger (PDF)</a>
             </div>
             
             <div class="card hidden" style="transition-delay: 200ms;">
